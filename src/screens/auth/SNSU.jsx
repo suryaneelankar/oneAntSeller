@@ -74,6 +74,7 @@ import {
   
     async function updateUser() {
         navigation.replace('PickInterests')
+        // navigation.navigate('BottomTabs');
 
     //   useAppStore.getState().setIsLoading(true);
     //   await firebase

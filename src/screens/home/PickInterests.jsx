@@ -1,62 +1,51 @@
-import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
-import React, {useState} from 'react';
-import {COLORS} from '../../constants/Colors';
-import MilesFilter from '../../components/filter/MilesFilter';
-import SelectCategoriesList from '../../components/filter/SelectCategoriesList';
-import BottomSheetPicker from '../../components/common/BottomSheetPicker';
+import { StyleSheet, Text, View, ScrollView, FlatList, Image } from 'react-native';
+import React from 'react';
+import { COLORS } from '../../constants/Colors';
 import PrimaryButton from '../../components/common/buttons/PrimaryButton';
-import useAppStore from '../../utils/zustand/useAppStore';
-import useFilterStore from '../../utils/zustand/useFilterStore';
-import HomeDecor from '../../assets/SellerImages/homeDecor.svg';
-import Fashion from '../../assets/SellerImages/fashion.svg';
-import Pets from '../../assets/SellerImages/pets.svg';
-import { SvgXml } from 'react-native-svg';
+// import useAppStore from '../../utils/zustand/useAppStore';
+// import useFilterStore from '../../utils/zustand/useFilterStore';
+import { useNavigation } from '@react-navigation/native';
 
 const PickInterests = () => {
-  const {productCategory} = useAppStore(state => state);
-  const {
-    selectedProductCategory,
-    setSelectedProductCategory,
-    setSelectedMiles,
-    selectedMiles,
-    selectedStores,
-    setSelectedStores,
-  } = useFilterStore(state => state);
+  const navigation = useNavigation();
 
-  console.log("selectedproducr***************",selectedProductCategory);
+  const data1 = [{ name: 'Home Decor', image: 'https://i0.wp.com/css-tricks.com/wp-content/uploads/2012/10/threelines.png' },
+  { name: 'Electronics', image: 'https://i0.wp.com/css-tricks.com/wp-content/uploads/2012/10/threelines.png' },
+  { name: 'Wellness', image: 'https://i0.wp.com/css-tricks.com/wp-content/uploads/2012/10/threelines.png' },
+  { name: 'Fashion', image: 'https://i0.wp.com/css-tricks.com/wp-content/uploads/2012/10/threelines.png' },
+  { name: 'Kitchen', image: 'https://i0.wp.com/css-tricks.com/wp-content/uploads/2012/10/threelines.png' },
+  { name: 'Travel', image: 'https://i0.wp.com/css-tricks.com/wp-content/uploads/2012/10/threelines.png' },
+  { name: 'DIY Tool', image: 'https://i0.wp.com/css-tricks.com/wp-content/uploads/2012/10/threelines.png' },
+  { name: 'Pets', image: 'https://i0.wp.com/css-tricks.com/wp-content/uploads/2012/10/threelines.png' }]
 
-  const imagesStatic = [{
-    name: 'Home',
-    Image: require("../../assets/SellerImages/homeDecor.svg"),
-  },{
-    name: 'Fashion',
-    Image: require('../../assets/SellerImages/fashion.svg')
-  },{}];
+  const renderItem = ({ item }) => {
+    return (
+      <View style={{
+        marginTop: 10, justifyContent: "center", width: 150, height: 130, margin: 5, borderRadius: 10, borderWidth: 1, borderColor: "lightgray",
+      }}>
+        <Image
+          source={{ uri: item.image }}
+          style={{ width: 30, height: 30, alignSelf: "center" }}
+        />
 
+        <Text style={{ alignSelf: "center", marginTop: 20, color: "#2A2A2A" }}>{item?.name}</Text>
+
+      </View>
+    )
+  }
 
   return (
     <>
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
         <Text style={styles.h1}>What are you selling?</Text>
         <Text style={styles.desc}>Select all that you sell</Text>
 
-        {/* <Text style={[styles.lable, {marginBottom: 10}]}>Store</Text>
-        <BottomSheetPicker
-          placeholder={selectedStores || 'Select a Store'}
-          data={['1', 'v', 'sds', 'fde', 'efd']}
-          onPress={item => setSelectedStores(item)}
-        /> */}
-
-        {/* <Text style={styles.lable}>Search Within</Text>
-        <MilesFilter selected={selectedMiles} setSelected={setSelectedMiles} /> */}
-
-        
-
-        <SelectCategoriesList
-          data={productCategory}
-          selected={selectedProductCategory}
-          setSelected={setSelectedProductCategory}
-        />
+        <View style={{ width: "100%", alignItems: "center" }}>
+          <FlatList
+            numColumns={2}
+            data={data1}
+            renderItem={renderItem} />
+        </View>
       </View>
 
       <View
@@ -67,7 +56,7 @@ const PickInterests = () => {
           backgroundColor: 'white',
           padding: 10,
         }}>
-        <PrimaryButton label={'Get Results'} />
+        <PrimaryButton style={{ backgroundColor: "#9038FF" }} label={'Get Results'} onPress={() => navigation.navigate('BottomTabs')} />
       </View>
     </>
   );

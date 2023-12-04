@@ -3,11 +3,12 @@ import React, {useCallback} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import Home from '../screens/tabs/Home';
-import Saved from '../screens/tabs/Saved';
+import ListProduct from '../screens/tabs/Saved';
 import Cart from '../screens/tabs/Cart';
 import More from '../screens/tabs/More';
 import SVGIcon from '../components/common/SvgIcon';
 import {COLORS} from '../constants/Colors';
+import Dashboard from '../screens/tabs/Dashboard';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -37,7 +38,7 @@ const BottomTabs = () => {
         tabBarIcon: useCallback(({focused}) => {
           if (route.name === 'Home') {
             return focused ? (
-              <ActiveIcon iconName={'active_home'} text="Shop" size="24" />
+              <ActiveIcon iconName={'active_home'} text="Orders" size="24" />
             ) : (
               <>
                 <SVGIcon
@@ -47,12 +48,27 @@ const BottomTabs = () => {
                   fill="transparent"
                   strokeWidth={2}
                 />
-                <Text style={[styles.text, styles.colorGray]}>Shop</Text>
+                <Text style={[styles.text, styles.colorGray]}>Orders</Text>
+              </>
+            );
+          }else if (route.name === 'Dashboard') {
+            return focused ? (
+              <ActiveIcon iconName={'active_cart'} text="Dashboard" size="24" />
+            ) : (
+              <>
+                <SVGIcon
+                  width={24}
+                  height={24}
+                  name="search"
+                  fill="transparent"
+                  strokeWidth={2}
+                />
+                <Text style={[styles.text, styles.colorGray]}>Dashboard</Text>
               </>
             );
           } else if (route.name === 'Saved') {
             return focused ? (
-              <ActiveIcon iconName={'active_saved'} text="Saved" size="24" />
+              <ActiveIcon iconName={'active_saved'} text="Products" size="24" />
             ) : (
               <>
                 <SVGIcon
@@ -62,12 +78,12 @@ const BottomTabs = () => {
                   fill="transparent"
                   strokeWidth={2}
                 />
-                <Text style={[styles.text, styles.colorGray]}>Saved</Text>
+                <Text style={[styles.text, styles.colorGray]}>Products</Text>
               </>
             );
           } else if (route.name == 'Cart') {
             return focused ? (
-              <ActiveIcon iconName={'active_cart'} text="Cart" size="24" />
+              <ActiveIcon iconName={'active_cart'} text="Support" size="24" />
             ) : (
               <>
                 <SVGIcon
@@ -77,7 +93,7 @@ const BottomTabs = () => {
                   fill="transparent"
                   strokeWidth={2}
                 />
-                <Text style={[styles.text, styles.colorGray]}>Cart</Text>
+                <Text style={[styles.text, styles.colorGray]}>Support</Text>
               </>
             );
           } else if (route.name === 'More') {
@@ -98,8 +114,9 @@ const BottomTabs = () => {
           }
         }, []),
       })}>
+        <BottomTab.Screen name="Dashboard" component={Dashboard} />
       <BottomTab.Screen name="Home" component={Home} />
-      <BottomTab.Screen name="Saved" component={Saved} />
+      <BottomTab.Screen name="Saved" component={ListProduct} />
       <BottomTab.Screen name="Cart" component={Cart} />
       <BottomTab.Screen name="More" component={More} />
     </BottomTab.Navigator>
