@@ -21,7 +21,7 @@ const Cart = () => {
   const renderItem = ({ item }) => {
 
     return (
-      <View style={{marginTop:15}}>
+      <View style={styles.mainView}>
 
         <View style={styles.OrdersProfileView}>
           <Image
@@ -128,12 +128,18 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'center'
   },
+  mainView: {
+    borderRadius: 15,
+    borderColor: 'black',
+    borderWidth: 1,
+    marginBottom:10
+  },
   FlatListStyle: {
     marginTop: 10,
     marginRight: 20,
     marginLeft: 20,
     borderRadius: 15,
-    borderColor: 'grey',
+    borderColor: 'white',
     borderWidth: 1,
     paddingBottom: 5
   },

@@ -15,6 +15,9 @@ const Home = () => {
           padding: 10,
         }}>
         <PrimaryButton label={'Home Screen'} />
+        <PrimaryButton label={'Home Screen'} />
+        <PrimaryButton label={'Home Screen'} />
+        <PrimaryButton label={'Home Screen'} />
       </View>
     </>
   );
