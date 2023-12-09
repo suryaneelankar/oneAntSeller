@@ -1,24 +1,20 @@
-import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Image,ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import { COLORS } from '../../constants/Colors';
 import PrimaryButton from '../../components/common/buttons/PrimaryButton';
 import { Dropdown } from 'react-native-element-dropdown';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import StepIndicator from 'react-native-step-indicator';
+import { IMAGES } from '../../assets/images';
 
 const Home = () => {
   const data1 = [
     { name: 'Total Price', value: '$90' },
-    { name: 'Total Price', value: '$90' },
-    { name: 'Total Price', value: '$90' },
-    { name: 'Total Price', value: '$90' },
-    { name: 'Total Price', value: '$90' },
-    { name: 'Total Price', value: '$90' }
   ]
   const countries = ["Egypt", "Canada", "Australia", "Ireland"]
   const countriesData = countries.map(country => ({ label: country, value: country }));
-  const [selectedCountry, setSelectedCountry] = useState([])
-  const [currentPosition, setCurrentPosition] = useState(2)
+  const [selectedCountry, setSelectedCountry] = useState('Select a country')
+  const [currentPosition, setCurrentPosition] = useState(1)
   const data = [{
     labels: "Acceptance",
     date: "sep30",
@@ -37,16 +33,54 @@ const Home = () => {
 
   const renderItem = ({ item }) => {
     return (
-      <View style={{
-        marginTop: 20, justifyContent: "center", width: 100, height: 100, margin: 10, borderRadius: 10, borderWidth: 1, borderColor: "gray", borderStyle: 'dashed',
+      <View style={{marginTop:15,borderRadius: 15,
+        borderColor: 'grey',
+        borderWidth: 1,
+        marginBottom:10}}>
 
-      }}>
-        <Image
-          source={{ uri: item.image }}
-          style={{ width: 0, height: 30, alignSelf: "center" }}
-        />
+        <View style={styles.OrdersProfileView}>
+          <Image
+            source={IMAGES.ProfilePicPicker}
+            style={styles.OrdersImage}
+            resizeMode='cover'
+          />
+          <View>
+            <Text style={{ fontSize: 18, fontWeight: '700', color: 'black' }}>Y-Pack Unisex Bag</Text>
+            <Text style={{ fontSize: 14, fontWeight: '400', color: 'black' }}>#123456789</Text>
+          </View>
+          <Image
+            source={IMAGES.ProfilePicPicker}
+            style={{ width: 60, height: 60 }}
+            resizeMode='cover'
+          />
+        </View>
 
-        <Text style={{ alignSelf: "center", color: "#2A2A2A" }}>{item?.name}</Text>
+        <View style={styles.BuyersView}>
+          <View style={{ marginLeft: 10 }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'black' }}>Buyers</Text>
+            <Text style={{ fontSize: 14, fontWeight: '400', color: 'black' }}>Amit + 3 Others</Text>
+          </View>
+          <Image
+            source={IMAGES.ProfilePicPicker}
+            style={{ width: 50, height: 50, marginRight: 10 }}
+            resizeMode='cover'
+          />
+        </View>
+
+        <View style={styles.TotalPriceView}>
+          <Text style={styles.TotalPriceText}>{item.name}</Text>
+          <Text style={styles.TotalPrice}>{item.value}</Text>
+        </View>
+
+        <View style={styles.AddressView}>
+          <Text style={styles.TotalPriceText}>Address</Text>
+          <Text style={styles.TotalPrice}>10068-IN</Text>
+        </View>
+
+        <View style={styles.StatusView}>
+          <Text style={styles.TotalPriceText}>Status</Text>
+          <Text style={styles.StatusPendingText}>PENDING</Text>
+        </View>
 
       </View>
 
@@ -55,21 +89,16 @@ const Home = () => {
 
   return (
     <View style={{
-      flex: 1,
-    }}>
+      flex: 1,marginLeft:20,marginRight:20
+      }}>
 
       <View
-        style={{
-          width: '100%',
-          // backgroundColor: 'blue',
-          padding: 10,
-        }}>
+       >
         <Text style={styles.manageTxt}>Manage Order</Text>
 
-        <View>
+        <View style={{padding:5}}>
           <FlatList
             // showsHorizontalScrollIndicator={false}
-            horizontal={true}
             data={data1}
             renderItem={renderItem}
             keyExtractor={(item) => item.value}
@@ -77,29 +106,26 @@ const Home = () => {
 
         </View>
 
-        <View style={{ borderWidth: 2, height: 50, width: '100%' }}>
-
-        </View>
-
       </View>
       <Text style={styles.manageTxt1}>Manage Order</Text>
 
 
-      <View style={{ flex: 0.1 }}>
-        <Dropdown
-          placeholder='Select a country'
+      <View style={{}}>
+        <Dropdown itemTextStyle={{color:'black'}}
+          activeColor='yellow'
+          placeholder={selectedCountry}
           data={countriesData}
           placeholderStyle={styles.placeHolderStyle}
           selectedTextStyle={styles.selectedTextStyle}
           style={[styles.dropdown]}
           iconStyle={styles.iconStyle}
-          maxHeight={300}
+          maxHeight={150}
           value={selectedCountry}
           onChange={(selectedItem) => {
             // Handle the selected item here
             console.log('Selected item:', selectedItem);
             // You can set the selected item in your state if needed
-            setSelectedCountry(selectedItem);
+            setSelectedCountry(selectedItem.value);
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem.label; // Text represented after the item is selected
@@ -115,19 +141,19 @@ const Home = () => {
         <Text style={styles.orderTxt}>Order Timeline</Text>
         <Text style={styles.orderTxt1}>#123456789</Text>
       </View>
-      <View style={{ flex: 0.5, margin: 10, flexDirection: 'row' }}>
-        <View style={{ flex: 0.5, justifyContent: 'center', }}>
+      {/* <View style={{margin: 10, flexDirection: 'row',flex:0.5}}> */}
+        <View style={{margin:8,justifyContent: 'center',flex:1}}>
           <StepIndicator
             stepCount={data.length}
-            currentPosition={currentPosition} // Set the current position based on your logic
+            currentPosition={currentPosition} 
             labels={data.map(step => step.labels)}
             customStyles={customStyles}
             direction="vertical"
             setCurrentPosition={true}
           />
-        </View>
+          </View>
 
-      </View>
+        {/* </View> */}
 
 
     </View>
@@ -147,13 +173,11 @@ const customStyles = {
   stepIndicatorFinishedColor: 'green',
   stepIndicatorUnFinishedColor: '#ffffff',
   stepIndicatorCurrentColor: 'green',
-  stepIndicatorLabelFontSize: 12,
-  currentStepIndicatorLabelFontSize: 12,
   stepIndicatorLabelCurrentColor: 'green',
   stepIndicatorLabelFinishedColor: '#ffffff',
   stepIndicatorLabelUnFinishedColor: '#aaaaaa',
   labelColor: 'black',
-  labelSize: 10,
+  labelSize: 18,
 };
 
 export default Home;
@@ -188,13 +212,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     marginLeft: 10,
     position: 'absolute',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    autoScroll:true,
+    
+    
 
 
   },
   placeHolderStyle: {
     fontSize: 16,
-    color: 'gray',
+    color: 'gary',
 
   },
   iconStyle: {
@@ -203,13 +230,121 @@ const styles = StyleSheet.create({
   },
   selectedTextStyle: {
     fontSize: 10,
-    color: COLORS.blue500
+    color: 'gray',
 
   },
-  manageTxt: { textAlign: 'center', fontSize: 18, fontWeight: 'bold', color: 'black' },
-  manageTxt1: { justifyContent: 'space-around', fontSize: 18, fontWeight: 'bold', color: 'black', margin: 10, },
+  manageTxt: { textAlign: 'center', 
+  fontSize: 18, 
+  fontWeight: 'bold', 
+  color: 'black' 
+},
+  manageTxt1: { 
+  fontSize: 18, fontWeight: 'bold', 
+  color: 'black', 
+  margin: 9, 
+},
   orderView: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 15, margin: 10 },
-  orderTxt: { fontSize: 18, fontWeight: 'bold', color: 'black', alignSelf: 'flex-end', marginTop: 30 },
-  orderTxt1: { alignSelf: 'flex-start', fontSize: 14, fontWeight: '400', color: 'black', marginTop: 30 },
+  orderTxt: { fontSize: 18, fontWeight: 'bold', color: 'black', alignSelf: 'flex-end', marginTop: 40 },
+  orderTxt1: { alignSelf: 'flex-start', fontSize: 14, fontWeight: '400', color: 'black', marginTop: 40 },
+
+  OrdersView: {
+    marginTop: 25,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  OrdersText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginLeft: 20,
+    color: 'black'
+  },
+  OrdersBtn: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    marginRight: 20
+  },
+  OrdersBtnText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'black',
+    textAlign: 'center'
+  },
+  FlatListStyle: {
+    marginTop: 10,
+    marginRight: 20,
+    marginLeft: 20,
+    borderRadius: 15,
+    borderColor: 'grey',
+    borderWidth: 1,
+    paddingBottom: 5
+  },
+  OrdersProfileView: {
+    backgroundColor: 'skyblue',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 15,
+    alignItems: 'center',
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
+  OrdersImage: {
+    width: 80,
+    height: 80,
+    backgroundColor: 'grey',
+    borderRadius: 10,
+    marginLeft: 5,
+  },
+  BuyersView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 15,
+    borderBottomColor: 'black',
+    borderBottomWidth: 0.5,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 25
+  },
+  TotalPriceView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 20,
+    borderBottomWidth: 0.5,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 25
+  },
+  TotalPriceText: {
+    fontSize: 18,
+    fontWeight: '400',
+    marginLeft: 5,
+    color: 'black'
+  },
+  TotalPrice: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginRight: 10,
+    color: 'black'
+  },
+  AddressView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 20,
+    borderBottomWidth: 0.5,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 25
+  },
+  StatusView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 20,
+  },
+  StatusPendingText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginRight: 10,
+    color: 'red',
+    backgroundColor: 'orange',
+    padding: 7,
+    borderRadius: 5
+  }
 
 });
