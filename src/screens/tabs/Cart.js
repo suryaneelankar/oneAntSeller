@@ -21,7 +21,11 @@ const Cart = () => {
   const renderItem = ({ item }) => {
 
     return (
-      <View style={styles.mainView}>
+      <View style={{
+        borderRadius: 15,
+        borderColor: 'grey',
+        borderWidth: 1,
+        marginBottom:10}}>
 
         <View style={styles.OrdersProfileView}>
           <Image
@@ -138,9 +142,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginRight: 20,
     marginLeft: 20,
-    borderRadius: 15,
-    borderColor: 'white',
-    borderWidth: 1,
     paddingBottom: 5
   },
   OrdersProfileView: {
