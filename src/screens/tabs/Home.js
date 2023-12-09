@@ -111,14 +111,15 @@ const Home = () => {
 
 
       <View style={{}}>
-        <Dropdown
+        <Dropdown itemTextStyle={{color:'black'}}
+          activeColor='yellow'
           placeholder={selectedCountry}
           data={countriesData}
           placeholderStyle={styles.placeHolderStyle}
           selectedTextStyle={styles.selectedTextStyle}
           style={[styles.dropdown]}
           iconStyle={styles.iconStyle}
-          maxHeight={300}
+          maxHeight={150}
           value={selectedCountry}
           onChange={(selectedItem) => {
             // Handle the selected item here
@@ -211,7 +212,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     marginLeft: 10,
     position: 'absolute',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    autoScroll:true,
+    
+    
 
 
   },
